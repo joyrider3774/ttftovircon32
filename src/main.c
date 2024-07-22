@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 {
 	if (argc != 3)
 	{
-		printf("use %s <path/to/font.tf> <fontsize>", gnu_basename(argv[0]));
+		printf("use %s <path/to/font.tf> <fontsize>\n", gnu_basename(argv[0]));
 		return 1;
 	}
 	if (SDL_Init(SDL_INIT_VIDEO) == 0)
