@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 						sanitize(FontName);
 
 						char Code[20000];
-						char Nr[10];
+						char Nr[20];
 						char Char[2];
 						Char[1] = 0;
 						strcpy(Code, "#ifndef ");
