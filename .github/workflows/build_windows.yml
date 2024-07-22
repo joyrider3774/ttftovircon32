@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-latest    
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Msys
         uses: msys2/setup-msys2@v2
         with:
@@ -70,7 +70,6 @@ jobs:
           cp /${{matrix.sys}}/bin/libpng*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libsharpyuv*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libstdc*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libSvtAv1Enc*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libtiff*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libwebp*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libwinpthread*.dll ./Release/ttftovircon/
@@ -80,7 +79,7 @@ jobs:
           cp /${{matrix.sys}}/bin/SDL2*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/zlib*.dll ./Release/ttftovircon/
       - name: Store build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ttftovircon ${{ matrix.env }}
           path: ./Release/
