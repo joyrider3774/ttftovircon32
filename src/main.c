@@ -148,10 +148,10 @@ int main(int argc, char *argv[])
 						strcat(Code, FontName);
 						strcat(Code, "_texture_id);\n");
     					//strcat(Code, "define_region_matrix(0,  0,0,  ");
-						//itoa(MaxCharWidth-1, Nr, 10);
+						//sprintf(Nr,"%d",MaxCharWidth-1);
 						//strcat(Code, Nr);
 						//strcat(Code, ",");
-						//itoa(MaxCharHeight-1, Nr, 10);
+						//sprintf(Nr,"%d",MaxCharHeight-1);
 						//strcat(Code, Nr);
 						//strcat(Code, ",  0,");
 						//strcat(Code, Nr);
@@ -179,38 +179,36 @@ int main(int argc, char *argv[])
 							    // (note that, for this font, upper and lowercase letters are the same)
     							strcat(Code, "select_region(");
 								strcat(Code, FontName);
-								strcat(Code, "_region_id + ");								
-								itoa(y*16 + x, Nr, 10);
+								strcat(Code, "_region_id + ");
+								sprintf(Nr,"%d", y*16 + x);
 								strcat(Code, Nr);
 								strcat(Code, ");");
 								strcat(Code, " //");
 								if((y*16 +x >= 32) && (y*16 +x < 127) && (y*16 +x != 92))
-								{																											
+								{
 									strcat(Code, Char);
 								}
 								strcat(Code, " ");
-								itoa(CharWidths[y][x], Nr, 10);
+								sprintf(Nr,"%d",CharWidths[y][x]);
 								strcat(Code, Nr);
 								strcat(Code, "\n");
     							strcat(Code, "define_region(");
-								itoa(x * MaxCharWidth, Nr , 10);
+								sprintf(Nr,"%d",x * MaxCharWidth);
 								strcat(Code,  Nr);
 								strcat(Code, ",");
-								itoa(y * MaxCharHeight, Nr , 10);
+								sprintf(Nr,"%d",y * MaxCharHeight);
 								strcat(Code,  Nr);
 								strcat(Code, ",  ");
-								itoa((x * MaxCharWidth) + CharWidths[y][x]-1, Nr , 10);
+								sprintf(Nr,"%d",(x * MaxCharWidth) + CharWidths[y][x]-1);
 								strcat(Code, Nr);
 								strcat(Code, ",");
-								itoa(((y+1) * MaxCharHeight)-1, Nr , 10);
+								sprintf(Nr,"%d",((y+1) * MaxCharHeight)-1);	
 								strcat(Code,  Nr);
 								strcat(Code, ",  ");
-								//itoa((x * MaxCharWidth), Nr , 10);
-								itoa(x * MaxCharWidth, Nr , 10);
+								sprintf(Nr,"%d",x * MaxCharWidth);
 								strcat(Code,  Nr);
 								strcat(Code, ",");
-								//itoa(((y+1) * MaxCharHeight)-1, Nr , 10);
-								itoa(y * MaxCharHeight, Nr , 10);
+								sprintf(Nr,"%d",y * MaxCharHeight);
 								strcat(Code,  Nr);
 								strcat(Code, ");\n");
 								
@@ -236,7 +234,7 @@ int main(int argc, char *argv[])
 						strcat(Code,"\n");
 						strcat(Code, FontVar);
 						strcat(Code, ".character_height = ");
-						itoa(MaxCharHeight, Nr, 10);
+						sprintf(Nr,"%d",MaxCharHeight);
 						strcat(Code, Nr);
 						strcat(Code, ";\n");
 
@@ -260,7 +258,7 @@ int main(int argc, char *argv[])
 
 						strcat(Code,"textfont_read_region_widths(&");
 						strcat(Code, FontVar);
-						strcat(Code, ");\n\n");			
+						strcat(Code, ");\n\n");
 
 						strcat(Code, "}\n");
 						strcat(Code, "#endif\n");
