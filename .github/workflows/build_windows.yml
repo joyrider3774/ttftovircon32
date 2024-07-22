@@ -43,41 +43,6 @@ jobs:
           cp ttftovircon.exe ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
           cp ./LICENSE ./Release/ttftovircon/
-      - name: Copy dll libraries
-        shell: msys2 {0}
-        run: |
-          cp /${{matrix.sys}}/bin/libaom*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libavif*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libbrotli*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libbz2*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libdav1d*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libdeflate*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libfreetype*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libgcc*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libglib*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libgraphite*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libharfbuzz*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libhwy*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libiconv*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libintl*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libjbig*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libjpeg*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libjxl*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/liblcms*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libLerc*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/liblzma*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libpcre*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libpng*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libsharpyuv*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libstdc*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libtiff*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libwebp*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libwinpthread*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libyuv*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libzstd*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/rav1*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/SDL2*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/zlib*.dll ./Release/ttftovircon/
       - name: Store build
         uses: actions/upload-artifact@v4
         with:
