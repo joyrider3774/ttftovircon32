@@ -1,0 +1,87 @@
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually target the Actions tab
+  workflow_dispatch:
+
+name: Build Windows
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - { sys: mingw64, env: x86_64 }
+          - { sys: mingw32, env: i686 }
+    runs-on: windows-latest    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+      - name: Setup Msys
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          install: >-
+            base-devel
+            mingw-w64-${{matrix.env}}-gcc
+            mingw-w64-${{matrix.env}}-SDL2             
+            mingw-w64-${{matrix.env}}-SDL2_ttf
+            mingw-w64-${{matrix.env}}-SDL2_image
+            mingw-w64-${{matrix.env}}-make
+            mingw-w64-${{matrix.env}}-harfbuzz
+            mingw-w64-${{matrix.env}}-freetype
+            mingw-w64-${{matrix.env}}-libwebp
+            mingw-w64-${{matrix.env}}-libtiff
+            mingw-w64-${{matrix.env}}-libpng
+      - name: Build Game
+        shell: msys2 {0}
+        run: |
+          make
+      - name: Copy Game And Assets
+        shell: msys2 {0}
+        run: |
+          mkdir ./Release
+          mkdir ./Release/ttftovircon
+          cp ttftovircon.exe ./Release/ttftovircon/
+          cp -R ./ttftovirconfs ./Release/ttftovircon/
+          cp ./README.md ./Release/ttftovircon/
+          cp ./LICENSE ./Release/ttftovircon/
+      - name: Copy dll libraries
+        shell: msys2 {0}
+        run: |
+          cp /${{matrix.sys}}/bin/libaom*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libavif*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libbrotli*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libbz2*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libdav1d*.dll ./Release/ttftovircon/                   
+          cp /${{matrix.sys}}/bin/libdeflate*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libfreetype*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libgcc*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libglib*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libgraphite*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libharfbuzz*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libhwy*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libiconv*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libintl*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libjbig*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libjpeg*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libjxl*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/liblcms*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libLerc*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/liblzma*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libpcre*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libpng*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libsharpyuv*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libstdc*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libSvtAv1Enc*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libtiff*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libwebp*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libwinpthread*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libyuv*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/libzstd*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/rav1*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/SDL2*.dll ./Release/ttftovircon/
+          cp /${{matrix.sys}}/bin/zlib*.dll ./Release/ttftovircon/
+      - name: Store build
+        uses: actions/upload-artifact@v3
+        with:
+          name: ttftovircon ${{ matrix.env }}
+          path: ./Release/

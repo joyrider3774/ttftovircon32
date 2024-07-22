@@ -1,0 +1,52 @@
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually target the Actions tab
+  workflow_dispatch:
+
+env:
+  GAME_NAME: ttftovircon32
+  GAME_BINARY: ttftovircon
+  GAME_ICON_FILE: icon.png
+  #viewed from Source directory
+  ARTIFACT_NAME: ttftovircon32 Mac Os X (x64)
+  
+name: Build Mac Os
+jobs:
+  build:
+    runs-on: macos-12    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+          
+      - name: Setup homebrew stuff
+        run: |
+          brew update
+          brew install --ignore-dependencies portaudio fluid-synth libxmp gettext glib aom libavif
+          brew install --ignore-dependencies SDL2 SDL2_Image SDL2_ttf dylibbundler
+       
+      - name: Build Game
+        run: |
+          make
+      - name: run dylibbundler
+        run: |
+          dylibbundler -cd -b -x "./$GAME_BINARY"
+      
+      - name: create app 
+        run: |
+          mkdir "$GAME_NAME"
+          chmod +x "./$GAME_BINARY"
+          cp "./$GAME_BINARY" "./$GAME_NAME"
+          mv "./libs" "./$GAME_NAME/libs"
+         
+      - name: prepare artifact 
+        # first tar.gz compresses to keep executable bit on the binary when extracted
+        # then prepares a directory to zip that file as github only supports zipped artifacts
+        run: |
+          mkdir artifact
+          tar -czvf "$ARTIFACT_NAME.tar.gz" "./$GAME_NAME"
+          mv  "$ARTIFACT_NAME.tar.gz" ./artifact/
+      - name: Store build
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{env.ARTIFACT_NAME}}
+          path: artifact
