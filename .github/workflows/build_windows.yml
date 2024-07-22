@@ -39,7 +39,7 @@ jobs:
         shell: msys2 {0}
         run: |
           mkdir ./Release
-          mkdir ./Release/ttftovircon
+          mkdir ./Release/ttftovircon
           cp ttftovircon.exe ./Release/ttftovircon/
           cp -R ./ttftovirconfs ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
