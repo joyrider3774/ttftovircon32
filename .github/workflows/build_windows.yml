@@ -41,7 +41,6 @@ jobs:
           mkdir ./Release
           mkdir ./Release/ttftovircon
           cp ttftovircon.exe ./Release/ttftovircon/
-          cp -R ./ttftovirconfs ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
           cp ./LICENSE ./Release/ttftovircon/
       - name: Copy dll libraries
