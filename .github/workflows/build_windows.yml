@@ -31,6 +31,7 @@ jobs:
             mingw-w64-${{matrix.env}}-libwebp
             mingw-w64-${{matrix.env}}-libtiff
             mingw-w64-${{matrix.env}}-libpng
+            mingw-w64-${{matrix.env}}-svt-av1
       - name: Build Binary
         shell: msys2 {0}
         run: |
