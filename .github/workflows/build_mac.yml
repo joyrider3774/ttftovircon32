@@ -34,8 +34,9 @@ jobs:
       - name: create app 
         run: |
           mkdir "$GAME_NAME"
+          mkdir "$GAME_NAME/bin"
           chmod +x "./$GAME_BINARY"
-          cp "./$GAME_BINARY" "./$GAME_NAME"
+          cp "./$GAME_BINARY" "./$GAME_NAME/bin/"
           mv "./libs" "./$GAME_NAME/libs"
          
       - name: prepare artifact 
