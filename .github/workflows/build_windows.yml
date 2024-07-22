@@ -31,11 +31,11 @@ jobs:
             mingw-w64-${{matrix.env}}-libwebp
             mingw-w64-${{matrix.env}}-libtiff
             mingw-w64-${{matrix.env}}-libpng
-      - name: Build Game
+      - name: Build Binary
         shell: msys2 {0}
         run: |
           make
-      - name: Copy Game And Assets
+      - name: Copy Binary And Assets
         shell: msys2 {0}
         run: |
           mkdir ./Release
