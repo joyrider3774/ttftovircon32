@@ -22,7 +22,7 @@ jobs:
           install: >-
             base-devel
             mingw-w64-${{matrix.env}}-gcc
-            mingw-w64-${{matrix.env}}-SDL2             
+            mingw-w64-${{matrix.env}}-SDL2
             mingw-w64-${{matrix.env}}-SDL2_ttf
             mingw-w64-${{matrix.env}}-SDL2_image
             mingw-w64-${{matrix.env}}-make
@@ -51,7 +51,7 @@ jobs:
           cp /${{matrix.sys}}/bin/libavif*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libbrotli*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libbz2*.dll ./Release/ttftovircon/
-          cp /${{matrix.sys}}/bin/libdav1d*.dll ./Release/ttftovircon/                   
+          cp /${{matrix.sys}}/bin/libdav1d*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libdeflate*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libfreetype*.dll ./Release/ttftovircon/
           cp /${{matrix.sys}}/bin/libgcc*.dll ./Release/ttftovircon/
