@@ -16,6 +16,7 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
       - name: install vcpkg
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
