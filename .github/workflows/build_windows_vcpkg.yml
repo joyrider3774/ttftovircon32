@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: |
           cd build
-          cmake --build . 
+          cmake --build . --config Release
       - name: Copy Binary And Assets
         run: |
           mkdir ./Release
