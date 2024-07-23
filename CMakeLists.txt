@@ -4,6 +4,10 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE AND DEFINED ENV{CMAKE_TOOLCHAIN_FILE})
    set(CMAKE_TOOLCHAIN_FILE $ENV{CMAKE_TOOLCHAIN_FILE})
 endif()
 
+if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(MACOSX TRUE)
+endif()
+
 project(ttftovircon)
 
 find_package(SDL2 CONFIG REQUIRED)
@@ -21,7 +25,10 @@ file(GLOB SRC CONFIGURE_DEPENDS
 
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 set(BUILD_SHARED_LIBS OFF)
+if (! ${MACOSX})
 set(CMAKE_EXE_LINKER_FLAGS "-static")
+endif()
+
 add_executable(ttftovircon)
 target_sources(${PROJECT_NAME} PRIVATE ${SRC} )
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static SDL2::SDL2main SDL2::SDL2-static)
