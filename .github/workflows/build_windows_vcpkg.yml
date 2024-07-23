@@ -29,12 +29,11 @@ jobs:
           echo "set(VCPKG_BUILD_TYPE release)" >> "$HOME/vcpkg/triplets/community/x64-windows-static-release-only.cmake"
           mkdir build
           cd build
-          cmake -DON_CI=1 "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
+          cmake "-DVCPKG_BUILD_TYPE release" "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
                
       - name: Build
         run: |
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release .. 
           cmake --build . 
       - name: Copy Binary And Assets
         run: |
