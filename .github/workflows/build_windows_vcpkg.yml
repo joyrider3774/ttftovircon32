@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - { sys: mingw64, env: x86_64, triplet: x64-windows-static }
+          - { sys: mingw64, env: x86_64, triplet: x64-windows-static-release-only }
   #        - { sys: mingw32, env: i686, triplet: ???? }
     runs-on: windows-latest    
     steps:
@@ -25,6 +25,8 @@ jobs:
       - name: Configure
    
         run: |
+          cp "$HOME/vcpkg/triplets/x64-windows-static.cmake" "$HOME/vcpkg/triplets/community/x64-windows-static-release-only.cmake"
+          echo "set(VCPKG_BUILD_TYPE release)" >> "$HOME/vcpkg/triplets/community/x64-windows-static-release-only.cmake"
           mkdir build
           cd build
           cmake -DON_CI=1 "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
