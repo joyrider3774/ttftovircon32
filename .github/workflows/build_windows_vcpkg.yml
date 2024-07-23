@@ -23,22 +23,25 @@ jobs:
           install: >-
             base-devel
             mingw-w64-${{matrix.env}}-ninja
-        - name: install vcpkg
-          run : |
-            git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
-            cd $HOME/vcpkg 
-            bootstrap-vcpkg.sh
-        - name: Configure
-          run: |
-            mkdir build
-            cd build
-            cmake -DON_CI=1 $ -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-                   
-        - name: Build
-          run: |
-            cd build
-            cmake --build . 
-        - name: Copy Binary And Assets
+      - name: install vcpkg
+        shell: msys2 {0}
+        run : |
+          git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
+          cd $HOME/vcpkg 
+          bootstrap-vcpkg.sh
+      - name: Configure
+        shell: msys2 {0}      
+        run: |
+          mkdir build
+          cd build
+          cmake -DON_CI=1 $ -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+               
+      - name: Build
+        shell: msys2 {0}  
+        run: |
+          cd build
+          cmake --build . 
+      - name: Copy Binary And Assets
         shell: msys2 {0}
         run: |
           mkdir ./Release
