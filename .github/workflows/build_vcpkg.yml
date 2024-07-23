@@ -22,15 +22,16 @@ jobs:
         if: runner.os == 'Windows'
       - name: install vcpkg
         run : |
-          git clone --depth 1  https://github.com/microsoft/vcpkg "$HOME/vcpkg"
-          cd "$HOME/vcpkg"
+          git clone --depth 1  https://github.com/microsoft/vcpkg "$HOME/vcpkg"          
       - name: bootstrap vcpkg
         if: runner.os == 'Windows'
         run: |
+          cd "$HOME/vcpkg"
           "bootstrap-vcpkg.bat"
       - name: bootstrap vcpkg
         if: runner.os != 'Windows'
         run: |
+          cd "$HOME/vcpkg"
           "./bootstrap-vcpkg.sh"
       - name: Configure   
         run: |
