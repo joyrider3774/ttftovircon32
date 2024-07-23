@@ -24,7 +24,14 @@ jobs:
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg "$HOME/vcpkg"
           cd "$HOME/vcpkg"
+      - name: bootstrap vcpkg
+        if: runner.os == 'Windows'
+        run: |
           "bootstrap-vcpkg.bat"
+      - name: bootstrap vcpkg
+        if: runner.os != 'Windows'
+        run: |
+          "./bootstrap-vcpkg.sh"
       - name: Configure   
         run: |
           cp "$HOME/vcpkg/triplets/${{ matrix.triplet }}.cmake" "$HOME/vcpkg/triplets/community/${{ matrix.triplet }}-release-only.cmake"
