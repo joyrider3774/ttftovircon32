@@ -32,12 +32,12 @@ jobs:
       - name: Build
         run: |
           cd build
-          cmake --build . 
+          cmake -DCMAKE_BUILD_TYPE=Release --build . 
       - name: Copy Binary And Assets
         run: |
           mkdir ./Release
           mkdir ./Release/ttftovircon
-          cp build/ttftovircon.exe ./Release/ttftovircon/
+          cp build/Release/ttftovircon.exe ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
           cp ./LICENSE ./Release/ttftovircon/
       - name: Store build
