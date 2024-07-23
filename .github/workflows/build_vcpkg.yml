@@ -46,6 +46,9 @@ jobs:
         run: |
           cd build
           cmake --build . --config Release
+      - name: Make Executable
+        if: runner.os != 'Windows'
+        chmod +x  build/${{ matrix.binary }}
       - name: Copy Binary And Assets
         run: |
           mkdir ./Release
