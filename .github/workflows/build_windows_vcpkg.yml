@@ -32,7 +32,8 @@ jobs:
       - name: Build
         run: |
           cd build
-          cmake -DCMAKE_BUILD_TYPE=Release --build . 
+          cmake -DCMAKE_BUILD_TYPE=Release .. 
+          cmake --build . 
       - name: Copy Binary And Assets
         run: |
           mkdir ./Release
