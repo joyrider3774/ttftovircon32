@@ -1,0 +1,53 @@
+name: Build Windows use VCPKG
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually target the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - { sys: mingw64, env: x86_64 }
+          - { sys: mingw32, env: i686 }
+    runs-on: windows-latest    
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Msys
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          install: >-
+            base-devel
+            mingw-w64-${{matrix.env}}-ninja
+        - name: install vcpkg
+          run : |
+            git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
+            cd $HOME/vcpkg 
+            bootstrap-vcpkg.sh
+        - name: Configure
+          run: |
+            mkdir build
+            cd build
+            cmake -DON_CI=1 $ -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+                   
+        - name: Build
+          run: |
+            cd build
+            cmake --build . 
+        - name: Copy Binary And Assets
+        shell: msys2 {0}
+        run: |
+          mkdir ./Release
+          mkdir ./Release/ttftovircon
+          cp build/ttftovircon.exe ./Release/ttftovircon/
+          cp ./README.md ./Release/ttftovircon/
+          cp ./LICENSE ./Release/ttftovircon/
+      - name: Store build
+        uses: actions/upload-artifact@v4
+        with:
+          name: ttftovircon ${{ matrix.env }}
+          path: ./Release/
