@@ -29,7 +29,7 @@ jobs:
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
           cd $HOME/vcpkg 
-          bootstrap-vcpkg.sh
+          ./bootstrap-vcpkg.sh
       - name: Configure
         shell: msys2 {0}      
         run: |
