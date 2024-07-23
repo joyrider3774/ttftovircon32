@@ -61,7 +61,7 @@ jobs:
         if: runner.os != 'Windows'
         run : |
           cd Release
-          tar -xzvf ../ttftovircon.tar.gz .
+          tar -czvf ../ttftovircon.tar.gz .
       - name: Store build
         uses: actions/upload-artifact@v4
         if: runner.os != 'Windows'
