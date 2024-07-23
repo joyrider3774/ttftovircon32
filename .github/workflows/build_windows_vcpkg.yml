@@ -10,41 +10,29 @@ jobs:
     strategy:
       matrix:
         include:
-          - { sys: mingw64, env: x86_64, triplet: x64-mingw-static }
+          - { sys: mingw64, env: x86_64, triplet: x64-windows-static }
   #        - { sys: mingw32, env: i686, triplet: ???? }
     runs-on: windows-latest    
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
-      - name: Setup Msys
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: ${{matrix.sys}}
-          install: >-
-            base-devel
-            git
-            mingw-w64-${{matrix.env}}-ninja
-            mingw-w64-${{matrix.env}}-cmake
       - name: install vcpkg
-        shell: msys2 {0}
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
           cd $HOME/vcpkg 
           ./bootstrap-vcpkg.sh
       - name: Configure
-        shell: msys2 {0}      
+   
         run: |
           mkdir build
           cd build
-          cmake -DON_CI=1 -DVCPKG_HOST_TRIPLET=x64-mingw-dynamic -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake -DON_CI=1 -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
                
       - name: Build
-        shell: msys2 {0}  
         run: |
           cd build
           cmake --build . 
       - name: Copy Binary And Assets
-        shell: msys2 {0}
         run: |
           mkdir ./Release
           mkdir ./Release/ttftovircon
