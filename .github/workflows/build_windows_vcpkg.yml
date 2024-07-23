@@ -23,6 +23,7 @@ jobs:
           install: >-
             base-devel
             mingw-w64-${{matrix.env}}-ninja
+            mingw-w64-${{matrix.env}}-git
       - name: install vcpkg
         shell: msys2 {0}
         run : |
