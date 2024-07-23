@@ -3,17 +3,17 @@ SRC_DIR = src
 OBJ_DIR = obj
 EXE=ttftovircon
 
-SRC=$(wildcard $(SRC_DIR)/*.c)
-OBJS=$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+SRC=$(wildcard $(SRC_DIR)/*.cpp)
+OBJS=$(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 
-CC ?= gcc
+CPP = g++
 SDL2CONFIG ?= sdl2-config
 DEFINES ?= 
 DESTDIR ?=
 PREFIX ?= /usr
 OPT_LEVEL ?= -O2
-CFLAGS ?= -Wall -Wextra  `$(SDL2CONFIG) --cflags`
+CPPFLAGS ?= -Wall -Wextra  `$(SDL2CONFIG) --cflags`
 LDFLAGS ?=
 
 #it was only way i could get it to link against static libs under msys2 / mingw
@@ -23,7 +23,7 @@ ifeq ($(MSYSTEM_PREFIX),/mingw64)
 LDLIBS += "$(PKG_CONFIG_SYSTEM_LIBRARY_PATH)/libSvtAv1Enc.a"
 endif
 else
-LDLIBS ?= `$(SDL2CONFIG) --libs` `pkgconf -libs SDL2_image SDL2_ttf`
+LDLIBS ?= `$(SDL2CONFIG) --libs` `pkgconf -libs -static SDL2_image SDL2_ttf`
 endif
 DEFINESADD = 
 FINALDEFINES = $(DEFINES) $(DEFINESADD)
@@ -33,7 +33,7 @@ LDLIBS += -mconsole
 endif
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -g
+CXXFLAGS += -g
 LDFLAGS += -g
 OPT_LEVEL =
 endif
@@ -43,10 +43,10 @@ endif
 all: $(EXE)
 
 $(EXE): $(OBJS)
-	$(CC) $(OPT_LEVEL) $(LDFLAGS) $(TARGET_ARCH) $(FINALDEFINES) $^ $(LDLIBS) -o $@ 
+	$(CXX) $(OPT_LEVEL) $(LDFLAGS) $(TARGET_ARCH) $(FINALDEFINES) $^ $(LDLIBS) -o $@ 
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)  
-	$(CC) $(OPT_LEVEL) $(CFLAGS) $(CXXFLAGS) $(FINALDEFINES) -c $< -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)  
+	$(CXX) $(OPT_LEVEL) $(CPPFLAGS) $(CXXFLAGS) $(FINALDEFINES) -c $< -o $@
 
 $(OBJ_DIR): 
 	mkdir -p $@

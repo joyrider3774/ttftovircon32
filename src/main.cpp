@@ -1,8 +1,8 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
-#include <string.h>
-#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
 
 int MaxCharWidth = 0;
 int MaxCharHeight = 0;
