@@ -10,8 +10,8 @@ jobs:
     strategy:
       matrix:
         include:
-          - { sys: mingw64, env: x86_64 }
-          - { sys: mingw32, env: i686 }
+          - { sys: mingw64, env: x86_64, triplet: x64-mingw-static }
+  #        - { sys: mingw32, env: i686, triplet: ???? }
     runs-on: windows-latest    
     steps:
       - name: Checkout sources
@@ -34,7 +34,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DON_CI=1 $ -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+          cmake -DON_CI=1 $ -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
                
       - name: Build
         shell: msys2 {0}  
