@@ -1,4 +1,4 @@
-name: Build Windows use VCPKG
+name: Build with VCPKG
 
 # Controls when the workflow will run
 on:
@@ -8,28 +8,30 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - { sys: mingw64, env: x86_64, triplet: x64-windows-static-release-only }
-  #        - { sys: mingw32, env: i686, triplet: ???? }
-    runs-on: windows-latest    
+          - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static }
+          - { os: macos-latest, env: Mac Os x64, triplet: x64-osx-static }
+          - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux-static }
+    runs-on: ${{ matrix.os }} 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4      
       - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
       - name: install vcpkg
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg "$HOME/vcpkg"
           cd "$HOME/vcpkg"
           "bootstrap-vcpkg.bat"
-      - name: Configure
-   
+      - name: Configure   
         run: |
-          cp "$HOME/vcpkg/triplets/x64-windows-static.cmake" "$HOME/vcpkg/triplets/community/x64-windows-static-release-only.cmake"
-          echo "set(VCPKG_BUILD_TYPE release)" >> "$HOME/vcpkg/triplets/community/x64-windows-static-release-only.cmake"
+          cp "$HOME/vcpkg/triplets/${{ matrix.triplet }}.cmake" "$HOME/vcpkg/triplets/community/${{ matrix.triplet }}-release-only.cmake"
+          echo "set(VCPKG_BUILD_TYPE release)" >> "$HOME/vcpkg/triplets/community/${{ matrix.triplet }}-release-only.cmake"
           mkdir build
           cd build
-          cmake "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
+          cmake "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}-release-only" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
                
       - name: Build
         run: |
