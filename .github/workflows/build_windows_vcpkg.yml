@@ -21,7 +21,7 @@ jobs:
         run : |
           git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
           cd $HOME/vcpkg 
-          ./bootstrap-vcpkg.sh
+          bootstrap-vcpkg.bat
       - name: Configure
    
         run: |
