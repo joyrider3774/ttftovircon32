@@ -36,7 +36,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DON_CI=1  -DCMAKE_MAKE_PROGRAM=ninja -G 'Ninja' -DVCPKG_HOST_TRIPLET=x64-mingw-dynamic -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake -DON_CI=1 -DVCPKG_HOST_TRIPLET=x64-mingw-dynamic -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
                
       - name: Build
         shell: msys2 {0}  
