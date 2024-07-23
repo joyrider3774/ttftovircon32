@@ -61,13 +61,13 @@ jobs:
         if: runner.os != 'Windows'
         run : |
           cd Release
-          tar -czvf ../ttftovircon.tar.gz .
+          tar -czvf "../ttftovircon ${{ matrix.env }}.tar.gz" ttftovircon
       - name: Store build
         uses: actions/upload-artifact@v4
         if: runner.os != 'Windows'
         with:
           name: ttftovircon ${{ matrix.env }}
-          path: ./ttftovircon.tar.gz
+          path: ./ttftovircon ${{ matrix.env }}.tar.gz
       - name: Store build
         uses: actions/upload-artifact@v4
         if: runner.os == 'Windows'
