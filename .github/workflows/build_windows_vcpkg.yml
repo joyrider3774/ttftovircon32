@@ -19,15 +19,15 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
       - name: install vcpkg
         run : |
-          git clone --depth 1  https://github.com/microsoft/vcpkg $HOME/vcpkg  
-          cd $HOME/vcpkg 
-          bootstrap-vcpkg.bat
+          git clone --depth 1  https://github.com/microsoft/vcpkg "$HOME/vcpkg"
+          cd "$HOME/vcpkg"
+          "bootstrap-vcpkg.bat"
       - name: Configure
    
         run: |
           mkdir build
           cd build
-          cmake -DON_CI=1 -DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }} -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+          cmake -DON_CI=1 "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
                
       - name: Build
         run: |
