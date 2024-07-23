@@ -11,9 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static }
-          - { os: macos-latest, env: Mac Os x64, triplet: x64-osx }
-          - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux }
+          - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static, binaryext: .exe }
+          - { os: macos-latest, env: Mac Os x x64, triplet: x64-osx, binaryext: }
+          - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux, binaryext: }
     runs-on: ${{ matrix.os }} 
     steps:
       - name: Checkout sources
@@ -49,7 +49,7 @@ jobs:
         run: |
           mkdir ./Release
           mkdir ./Release/ttftovircon
-          cp build/Release/ttftovircon.exe ./Release/ttftovircon/
+          cp build/Release/ttftovircon${{ matrix.binaryext }}  ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
           cp ./LICENSE ./Release/ttftovircon/
       - name: Store build
