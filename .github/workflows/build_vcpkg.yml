@@ -57,6 +57,17 @@ jobs:
           cp build/${{ matrix.binary }}  ./Release/ttftovircon/
           cp ./README.md ./Release/ttftovircon/
           cp ./LICENSE ./Release/ttftovircon/
+      - name: Tar Gzip everything
+        if: runner.os != 'Windows'
+        run : |
+          cd Release
+          tar -xzvf ../ttftovircon.tar.gz .
+      - name: Store build
+        uses: actions/upload-artifact@v4
+        if: runner.os != 'Windows'
+        with:
+          name: ttftovircon ${{ matrix.env }}
+          path: ./ttftovircon.tar.gz
       - name: Store build
         uses: actions/upload-artifact@v4
         with:
