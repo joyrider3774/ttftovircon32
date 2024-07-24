@@ -12,8 +12,8 @@ jobs:
       matrix:
         include:
           - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static, binary: Release/ttftovircon.exe, vcpkginstallopt: --allow-unsupported }
-          - { os: macos-13, env: Mac Os x64, triplet: x64-osx, binary: ttftovircon, vcpkginstallopt:}
-          - { os: macos-latest, env: Mac Os arm64, triplet: arm64-osx, binary: ttftovircon, vcpkginstallopt:}
+          - { os: macos-13, env: Mac Os x64, triplet: x64-osx, binary: ttftovircon, vcpkginstallopt: }
+          - { os: macos-latest, env: Mac Os arm64, triplet: arm64-osx, binary: ttftovircon, vcpkginstallopt: }
           - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux, binary: ttftovircon, vcpkginstallopt: --allow-unsupported}
     runs-on: ${{ matrix.os }} 
     steps:
