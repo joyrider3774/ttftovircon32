@@ -41,7 +41,10 @@ jobs:
           mkdir build
           cd build
           cmake "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}-release-only" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..
-               
+      - name: set crt static
+        if: runner.os != 'macOS'
+        run: |
+          sed -i -e 's/.*VCPKG_CRT_LINKAGE.*/set(VCPKG_CRT_LINKAGE static)/g' "$HOME/vcpkg/triplets/community/triplets/community/${{ matrix.triplet }}-release-only.cmake"
       - name: Build
         run: |
           cd build
