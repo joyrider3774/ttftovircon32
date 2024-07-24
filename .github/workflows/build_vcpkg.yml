@@ -11,10 +11,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static, binary: Release/ttftovircon.exe }
-          - { os: macos-13, env: Mac Os x64, triplet: x64-osx, binary: ttftovircon}
-          - { os: macos-latest, env: Mac Os arm64, triplet: arm64-osx, binary: ttftovircon}
-          - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux, binary: ttftovircon}
+          - { os: windows-latest, env: Windows x86_64, triplet: x64-windows-static, binary: Release/ttftovircon.exe, vcpkginstallopt: --allow-unsupported }
+          - { os: macos-13, env: Mac Os x64, triplet: x64-osx, binary: ttftovircon, vcpkginstallopt:}
+          - { os: macos-latest, env: Mac Os arm64, triplet: arm64-osx, binary: ttftovircon, vcpkginstallopt:}
+          - { os: ubuntu-latest, env: Ubuntu x86_64, triplet: x64-linux, binary: ttftovircon, vcpkginstallopt: --allow-unsupported}
     runs-on: ${{ matrix.os }} 
     steps:
       - name: Checkout sources
@@ -46,7 +46,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}-release-only" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..      
+          cmake "-DVCPKG_INSTALL_OPTIONS=${{ matrix.vcpkginstallopt }}" "-DVCPKG_TARGET_TRIPLET=${{ matrix.triplet }}-release-only" "-DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake" ..      
       - name: Build
         run: |
           cd build
