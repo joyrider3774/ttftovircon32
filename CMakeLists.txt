@@ -31,4 +31,7 @@ endif()
 
 add_executable(ttftovircon)
 target_sources(${PROJECT_NAME} PRIVATE ${SRC} )
-target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++ SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static SDL2::SDL2main SDL2::SDL2-static)
+if (! ${MACOSX})
+target_link_libraries(${PROJECT_NAME} PRIVATE -static-libgcc -static-libstdc++)
+endif()
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2_image::SDL2_image-static SDL2_ttf::SDL2_ttf-static SDL2::SDL2main SDL2::SDL2-static)
